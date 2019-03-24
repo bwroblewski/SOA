@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head><title>Start</title></h:head>
+<h:body>
+   <h:form>
+      <p>Imie</p>
+      <h:inputText label = "Imie" id="name" value = "#{Manager.name}"  validatorMessage="Imie wymagane">
+         <f:validateRequired/>
+      </h:inputText>
+      <h:message for="name"/><br/>
+      <p>Mail</p>
+      <h:inputText label = "Mail" id = "mail" value = "#{Manager.mail}">
+         <f:validator validatorId="MailValidator"/>
+      </h:inputText><h:message for="mail"/><br/>
+      <p>Wiek</p>
+      <h:inputText label = "Wiek" id = "age" value = "#{Manager.age}" >
+         <f:validator validatorId="AgeValidator"/>
+      </h:inputText><h:message for="age"/><br/>
+      <p>Plec</p>
+      <h:selectOneRadio id = "gender" value="#{Manager.gender}" validatorMessage="Zaznacz plec">
+         <f:validateRequired/>
+         <f:selectItems value = "#{Manager.genders}"/>
+         <f:ajax listener="#{Manager.dispGender}" render="genderForm" />
+      </h:selectOneRadio>
+      <h:message for="gender"/>
+      <p>Wyksztalcenie</p>
+      <h:selectOneMenu value="#{Manager.education}">
+         <f:selectItems value="#{Manager.ed_types}"/>
+      </h:selectOneMenu><br/>
+      <p>Wzrost</p>
+      <h:inputText id = "height" value = "#{Manager.height}">
+         <f:attribute name="Gender" value="#{Manager.gender}"/>
+         <f:validator validatorId="HeightValidator"/>
+      </h:inputText><h:message for="height"/><br/>
+      <h:panelGroup id = "genderForm">
+         <h:panelGroup rendered="#{Manager.female}">
+            <p>Obwód biustu</p>
+            <h:inputText id = "breast" value="#{Manager.breast}" >
+               <f:validator validatorId="GeneralValidator"/>
+            </h:inputText> <h:message for="breast"/><br/>
+            <p>Miseczka</p>
+            <h:selectOneMenu id="cup" value="#{Manager.cup}" validatorMessage="Pole wymagane">
+               <f:selectItems value="#{Manager.cups}"/>
+               <f:validateRequired/>
+            </h:selectOneMenu><h:message for="cup"/><br/>
+            <p>Obwód talii</p>
+            <h:inputText id = "waist" value="#{Manager.waist}">
+               <f:validator validatorId="GeneralValidator"/>
+            </h:inputText> <h:message for="waist"/><br/>
+            <p>Obwód bioder</p>
+            <h:inputText id = "hips" value="#{Manager.hips}">
+               <f:validator validatorId="GeneralValidator"/>
+            </h:inputText> <h:message for="breast"/><br/>
+         </h:panelGroup>
+         <h:panelGroup rendered="#{Manager.male}">
+            <p>Obwód klatki</p>
+            <h:inputText id = "ribcage" value="#{Manager.ribcage}">
+               <f:validator validatorId="GeneralValidator"/>
+            </h:inputText> <h:message for="ribcage"/><br/>
+            <p>Obwód w pasie</p>
+            <h:inputText id = "belt" value="#{Manager.belt}">
+               <f:validator validatorId="GeneralValidator"/>
+            </h:inputText> <h:message for="belt"/><br/>
+         </h:panelGroup>
+      </h:panelGroup>
+      <h:commandButton value = "OK" action="#{Manager.toggleExtra}">
+      </h:commandButton>
+      <h:panelGroup id = "extra" rendered="#{Manager.extra}">
+         <p>Ile jestes w stanie przeznaczyc miesiecznie na zakup ubrania?</p>
+         <h:selectOneMenu value="#{Manager.answer1}">
+            <f:selectItems value="#{Manager.question1}"/>
+         </h:selectOneMenu>
+         <p>Jak czesto dokonujesz zakupu ubrania?</p>
+         <h:selectOneMenu value="#{Manager.answer2}">
+            <f:selectItems value="#{Manager.question2}"/>
+         </h:selectOneMenu>
+         <p>W jakich kolorach preferujesz ubrania?</p>
+         <h:selectManyCheckbox value="#{Manager.answer3}">
+            <f:selectItems value="#{Manager.question3}"/>
+         </h:selectManyCheckbox>
+         <p>Jakiego rodzaku ubrania najchetniej kupujesz?</p>
+         <h:selectManyCheckbox value="#{Manager.answer}" rendered="#{Manager.female}">
+            <f:selectItems value="#{Manager.questionf}"/>
+         </h:selectManyCheckbox>
+         <h:selectManyCheckbox value="#{Manager.answer}" rendered="#{Manager.male}">
+            <f:selectItems value="#{Manager.questionm}"/>
+         </h:selectManyCheckbox>
+         <h:commandButton value = "wyslij" action = "summary"/>
+      </h:panelGroup>
+   </h:form>
+</h:body>
+</html>

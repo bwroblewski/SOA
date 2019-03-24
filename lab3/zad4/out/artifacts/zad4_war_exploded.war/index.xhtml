@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head><title>Ksiazki</title></h:head>
+<h:body>
+   <h:form>
+      <h:outputLabel value="Przeliczyć na PLN?">
+         <h:selectBooleanCheckbox value="#{Manager.calc}" />
+      </h:outputLabel>
+      <p>Kategorie</p>
+      <h:selectManyCheckbox value = "#{Manager.checked}" >
+         <f:selectItems value = "#{Manager.categories}" />
+      </h:selectManyCheckbox>
+      <p>Waluta</p>
+      <h:selectOneListbox value ="#{Manager.currency}">
+         <f:selectItems value="#{Manager.currencies.keySet()}"/>
+      </h:selectOneListbox>
+      <p>Minimalna cena:</p><h:inputText value="#{Manager.min}"/>
+      <p>Maksymalna cena:</p><h:inputText value="#{Manager.max}"/>
+      <br/>
+      <h:commandButton value = "filtruj" action = "#{Manager.filter}"/>
+   </h:form>
+   <br/>
+   <h:form>
+      <h:dataTable value = "#{Manager.filtered}" var = "book">
+         <h:column>
+            <f:facet name = "header">Title</f:facet>
+            #{book[0]}
+         </h:column>
+         <h:column>
+            <f:facet name = "header">Author</f:facet>
+            #{book[1]}
+         </h:column>
+         <h:column>
+            <f:facet name = "header">Category</f:facet>
+            #{book[2]}
+         </h:column>
+         <h:column>
+            <f:facet name = "header">Price</f:facet>
+            #{book[3]}
+         </h:column>
+         <h:column>
+            <f:facet name = "header">Currency</f:facet>
+            #{book[4]}
+         </h:column>
+         <h:column>
+            <f:facet name = "header">Pages</f:facet>
+            #{book[5]}
+         </h:column>
+         <h:column>
+            <f:facet name="header">Action</f:facet>
+            <h:commandLink value="Dodaj" action="#{Manager.add(book)}" />
+         </h:column>
+      </h:dataTable>
+      <br/>
+      <h:commandButton value = "Zamow" action="#{Manager.order}"/>
+   </h:form>
+</h:body>
+</html>

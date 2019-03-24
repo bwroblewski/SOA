@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head><title>Start</title></h:head>
+<h:body>
+    <h:form>
+        <h:selectOneListbox value = "#{Manager.brand}" >
+           <f:selectItems value="#{Manager.brands.keySet()}"/>
+           <f:ajax listener="#{Manager.changeBrand}" render="models" />
+        </h:selectOneListbox>
+        <h:panelGroup id = "models">
+            <br/>
+           <h:selectOneListbox value = "#{Manager.model}" rendered = "#{not empty Manager.models}">
+               <f:selectItems value="#{Manager.models}"/>
+           </h:selectOneListbox><br/>
+        </h:panelGroup>
+        <h:inputText value="#{Manager.min}"/><br/>
+        <h:inputText value="#{Manager.max}"/><br/>
+        <h:selectOneListbox value = "#{Manager.engine}">
+          <f:selectItem itemValue = "ON" />
+          <f:selectItem itemValue = "benzyna" />
+        </h:selectOneListbox><br/>
+        <h:inputText value="#{Manager.name}" /><br/>
+        <h:inputText value="#{Manager.phone}"/><br/>
+        <h:commandButton value = "szukaj" action ="#{Manager.filter}">
+        </h:commandButton>
+        <ui:repeat value="#{Manager.filtered}" var="element" >
+            <p>#{element[0]} #{element[1]} #{element[2]} </p>
+        </ui:repeat>
+    </h:form>
+</h:body>
+</html>

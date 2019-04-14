@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head><title>Library</title></h:head>
+<h:body>
+   <h:form>
+      <h:commandButton value = "Add Book" >
+         <f:ajax listener="#{Manager.displayAddForm}" render="Forms"/>
+      </h:commandButton>
+   </h:form>
+   <h:panelGroup id = "View">
+   <h:panelGroup id="Forms">
+      <h:form rendered="#{Manager.createForm}">
+         Add book:<br/>
+         Author Name:   <h:inputText value="#{Manager.name}" id ="addName" required="true" requiredMessage="Provide author name"/><h:message for="addName"/><br/>
+         Author Surname:<h:inputText value="#{Manager.surname}" id ="addSurname" required="true" requiredMessage="Provide author surname"/><h:message for="addSurname"/><br/>
+         ISBN:          <h:inputText value="#{Manager.isbn}" id ="addISBN" required="true" requiredMessage="Provide ISBN"/><h:message for="addISBN"/><br/>
+         Title:         <h:inputText value="#{Manager.title}" id ="addTitle" required="true" requiredMessage="Provide title"/><h:message for="addTitle"/><br/>
+         Year:          <h:inputText value="#{Manager.year}" id ="addYear" required="true" requiredMessage="Provide year"/><h:message for="addYear"/><br/>
+         Price:         <h:inputText value="#{Manager.price}" id ="addPrice" required="true" requiredMessage="Provide price"/><h:message for="addPrice"/><br/>
+         <h:commandButton value = "Add" action="#{Manager.addBook}">
+            <f:ajax listener="#{Manager.hideForms}" render="View"/>
+         </h:commandButton>
+      </h:form>
+      <h:form rendered="#{Manager.updateForm}">
+         Update book:<br/>
+         Author Name:   <h:inputText value="#{Manager.name}" id ="updateName" required="true" requiredMessage="Provide author name"/><h:message for="updateName"/><br/>
+         Author Surname:<h:inputText value="#{Manager.surname}" id ="updateSurname" required="true" requiredMessage="Provide author surname"/><h:message for="updateSurname"/><br/>
+         ISBN:          <h:inputText value="#{Manager.isbn}" id ="updateISBN" required="true" requiredMessage="Provide ISBN"/><h:message for="updateISBN"/><br/>
+         Title:         <h:inputText value="#{Manager.title}" id ="updateTitle" required="true" requiredMessage="Provide title"/><h:message for="updateTitle"/><br/>
+         Year:          <h:inputText value="#{Manager.year}" id ="updateYear" required="true" requiredMessage="Provide year"/><h:message for="updateYear"/><br/>
+         Price:         <h:inputText value="#{Manager.price}" id ="updatePrice" required="true" requiredMessage="Provide price"/><h:message for="updatePrice"/><br/>
+         <h:commandButton value = "Update" action="#{Manager.updateBook}">
+            <f:ajax listener="#{Manager.hideForms}" render="View"/>
+         </h:commandButton>
+      </h:form>
+   </h:panelGroup>
+   <h:panelGroup id="List">
+      <h:panelGroup rendered="#{empty Manager.books}">No books to display.</h:panelGroup>
+      <h:panelGroup rendered="#{not empty Manager.books}">
+         <h:dataTable value="#{Manager.books}" var="book">
+            <h:column >
+               <f:facet name="header">Name</f:facet>
+               #{book.name}
+            </h:column>
+            <h:column >
+               <f:facet name="header">Surname</f:facet>
+               #{book.surname}
+            </h:column>
+            <h:column >
+               <f:facet name="header">Title</f:facet>
+               #{book.title}
+            </h:column>
+            <h:column >
+               <f:facet name="header">ISBN</f:facet>
+               #{book.isbn}
+            </h:column>
+            <h:column >
+               <f:facet name="header">Year</f:facet>
+               #{book.year}
+            </h:column>
+            <h:column >
+               <f:facet name="header">Price</f:facet>
+               #{book.price}
+            </h:column>
+            <h:column>
+               <h:commandButton value="Update">
+                  <f:ajax listener="#{Manager.displayUpdateForm(book)}" render="Forms"/>
+               </h:commandButton>
+            </h:column>
+            <h:column>
+               <h:commandButton value="Delete">
+                  <f:ajax listener="#{Manager.deleteBook(book.id)}" render="List"/>
+               </h:commandButton>
+            </h:column>
+         </h:dataTable>
+      </h:panelGroup>
+   </h:panelGroup>
+   </h:panelGroup>
+</h:body>
+</html>

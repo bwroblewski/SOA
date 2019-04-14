@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xml:lang="en" lang="en">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<h:panelGroup rendered="#{not empty Manager.errMsg}">#{Manager.errMsg}</h:panelGroup>
+<p>Fundusze:   #{Manager.funds}</p>
+<h:form>
+    <h:commandButton value = "powrot" action = "index"/>
+    <h:dataTable value="#{Manager.seats}" var = "seat">
+        <h:column>
+            <f:facet name="header">Rzad</f:facet>
+            #{seat.row}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Kolumna</f:facet>
+            #{seat.col}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Cena</f:facet>
+            #{seat.price}
+        </h:column>
+        <h:column><h:commandButton value = "rezerwuj" action="#{Manager.bookSeat(seat)}"/></h:column>
+    </h:dataTable>
+
+</h:form>
+
+</body>
+</html>

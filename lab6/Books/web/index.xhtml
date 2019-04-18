@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://java.sun.com/jsf/composite">
+
+<h:head><title>Library</title></h:head>
+<h:body>
+    <h:panelGroup id = "view">
+        <h:panelGroup id="readers" style="float: left">
+            <p>Readers:</p>
+            <h:dataTable value="#{Manager.readers}" var="el">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    #{el.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Surame</f:facet>
+                    #{el.surname}
+                </h:column>
+                <h:column>
+                    <h:commandButton value ="delete" action="#{Manager.delete(el.id,el)}">
+                        <f:ajax render="readers"/>
+                    </h:commandButton>
+                    <h:commandButton value ="update" action="#{Manager.dispReaderUpdateForm(el)}">
+                        <f:ajax render="readers"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="readerForm">
+                <br/>
+                <h:form rendered = "#{!Manager.readerCreateForm}">
+                    <h:commandButton value="Add"><f:ajax listener="#{Manager.dispReaderCreateForm}" render="view"/> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.readerCreateForm}">
+                    <p> Create Reader:</p>
+                    Reader Name: <h:inputText value="#{Manager.readerName}"/><br/>
+                    Reader Surname: <h:inputText value="#{Manager.readerSurname}"/><br/>
+                    <h:commandButton value="Add" action="#{Manager.createReader}" ></h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.readerUpdateForm}">
+                    <p> Update Reader:</p>
+                    Reader Name: <h:inputText value="#{Manager.readerName}"/><br/>
+                    Reader Surname: <h:inputText value="#{Manager.readerSurname}"/><br/>
+                    <h:commandButton value="Update" action="#{Manager.updateReader}"> </h:commandButton>
+                </h:form>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <pre style="float: left">     </pre>
+
+        <h:panelGroup id="books" style="float: left">
+            <p>Books:</p>
+            <h:dataTable value="#{Manager.books}" var="book">
+                <h:column>
+                    <f:facet name="header">Title</f:facet>
+                    #{book.title}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Author</f:facet>
+
+                </h:column>
+                <h:column>
+                    <h:commandButton value ="delete" action="#{Manager.delete(el.id,el)}">
+                        <f:ajax render="books"/>
+                    </h:commandButton>
+                    <h:commandButton value ="update" action="#{Manager.dispBookUpdateForm(el)}">
+                        <f:ajax render="books"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="bookForm">
+                <br/>
+                <h:form rendered = "#{!Manager.bookCreateForm}">
+                    <h:commandButton value="Add"><f:ajax listener="#{Manager.dispBookCreateForm}" render="view"/> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.bookCreateForm}">
+                    <p> Create Book:</p>
+                    Book Title: <h:inputText value="#{Manager.bookTitle}"/><br/>
+                    Book Author: <h:selectOneListbox value="#{Manager.bookAuthor}"><f:selectItems itemValue="#{Manager.authors}" itemLabel="#{Manager.authorNames}"/></h:selectOneListbox><br/>
+                    <h:commandButton value="Add" action="#{Manager.createBook}"> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.bookUpdateForm}">
+                    <p> Update Book:</p>
+                    Book Title: <h:inputText value="#{Manager.bookTitle}"/><br/>
+                    Book Author: <h:selectOneListbox value="#{Manager.bookAuthor}"><f:selectItems itemValue="#{Manager.authors}" itemLabel="#{Manager.authorNames}"/></h:selectOneListbox><br/>
+                    <h:commandButton value="Update" action="#{Manager.updateBook}"> </h:commandButton>
+                </h:form>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+        <pre style="float: left">     </pre>
+
+        <h:panelGroup id="authors" style="float: left">
+            <p>Authors:</p>
+            <h:dataTable value="#{Manager.authors}" var="author">
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    #{author.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Surame</f:facet>
+                    #{author.surname}
+                </h:column>
+                <h:column>
+                    <h:commandButton value ="delete" action="#{Manager.delete(el.id,el)}">
+                        <f:ajax render="authors"/>
+                    </h:commandButton>
+                    <h:commandButton value ="update" action="#{Manager.dispAuthorUpdateForm(el)}">
+                        <f:ajax render="authors"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="authorForm">
+                <br/>
+                <h:form rendered = "#{!Manager.authorCreateForm}">
+                    <h:commandButton value="Add"><f:ajax listener="#{Manager.dispAuthorCreateForm}" render="view"/> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.authorCreateForm}">
+                    <p> Create Author:</p>
+                    Author Name: <h:inputText value="#{Manager.authorName}"/><br/>
+                    Author Surname: <h:inputText value="#{Manager.authorSurname}"/><br/>
+                    <h:commandButton value="Add" action="#{Manager.createAuthor}"> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.authorUpdateForm}">
+                    <p> Update Author:</p>
+                    Author Name: <h:inputText value="#{Manager.authorName}"/><br/>
+                    Author Surname: <h:inputText value="#{Manager.authorSurname}"/><br/>
+                    <h:commandButton value="Update" action="#{Manager.updateAuthor}"> </h:commandButton>
+                </h:form>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+        <pre style="float: left">     </pre>
+
+        <h:panelGroup id="rentals" style="float: left">
+            <p>Rentals:</p>
+            <h:dataTable value="#{Manager.rentals}" var="rental">
+                <h:column>
+                    <f:facet name="header">Reader</f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Book</f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Rental Date</f:facet>
+                    #{rental.rentalDate}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Return Date</f:facet>
+                    #{rental.returnDate}
+                </h:column>
+                <h:column>
+                    <h:commandButton value ="delete" action="#{Manager.delete(el.id,el)}">
+                        <f:ajax render="rentals"/>
+                    </h:commandButton>
+                    <h:commandButton value ="update" action="#{Manager.dispRentalUpdateForm(el)}">
+                        <f:ajax render="rentals"/>
+                    </h:commandButton>
+                </h:column>
+            </h:dataTable>
+            <h:panelGroup id="rentalForm">
+                <br/>
+                <h:form rendered = "#{!Manager.rentalCreateForm}">
+                    <h:commandButton value="Add"><f:ajax listener="#{Manager.dispRentalCreateForm}" render="view"/> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.rentalCreateForm}">
+                    <p> Create Rental:</p>
+                    Reader: <h:selectOneListbox value="#{Manager.rentalReader}"><f:selectItems itemValue="#{Manager.readers}" itemLabel="#{Manager.readerNames}"/></h:selectOneListbox><br/>
+                    Book: <h:selectOneListbox value="#{Manager.rentalBook}"><f:selectItems itemValue="#{Manager.books}" itemLabel="#{Manager.bookTitles}"/></h:selectOneListbox><br/>
+                    Rental Date: <h:inputText value="#{Manager.rentalDate}"><f:convertDateTime pattern = "dd-mm-yyyy"/></h:inputText>
+                    Return Date: <h:inputText value="#{Manager.returnDate}"><f:convertDateTime pattern = "dd-mm-yyyy"/></h:inputText>
+                    <h:commandButton value="Add"  action="#{Manager.createRental}"> </h:commandButton>
+                </h:form>
+                <h:form rendered="#{Manager.rentalUpdateForm}">
+                    <p> Update Rental:</p>
+                    Reader: <h:selectOneListbox value="#{Manager.rentalReader}"><f:selectItems itemValue="#{Manager.readers}" itemLabel="#{Manager.readerNames}"/></h:selectOneListbox><br/>
+                    Book: <h:selectOneListbox value="#{Manager.rentalBook}"><f:selectItems itemValue="#{Manager.books}" itemLabel="#{Manager.bookTitles}"/></h:selectOneListbox><br/>
+                    Rental Date: <h:inputText value="#{Manager.rentalDate}"><f:convertDateTime pattern = "dd-mm-yyyy"/></h:inputText>
+                    Return Date: <h:inputText value="#{Manager.returnDate}"><f:convertDateTime pattern = "dd-mm-yyyy"/></h:inputText>
+                    <h:commandButton value="Update" action="#{Manager.updateRental}"></h:commandButton>
+                </h:form>
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </h:panelGroup>
+</h:body>
+</html>
